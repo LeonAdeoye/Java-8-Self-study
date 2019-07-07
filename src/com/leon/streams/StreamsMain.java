@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -37,7 +38,7 @@ public class StreamsMain
 
         menu.stream().filter(Dish::isVegetarian)
                 .map(Dish::getName).forEach(System.out::println); // filter takes a predicate and returns another stream.
-        
+
         asList(2,4,4,6,8,8).stream().distinct()
                 .forEach(System.out::println); // unique based hashCode and equals implementation.
 
@@ -89,7 +90,34 @@ public class StreamsMain
         // If an initial value argument is not provided to the Integer::min reduce terminal operation (x,y) -> x < y ? x : y then it will return an Optional.
         menu.stream().filter(d -> d.getType() == Dish.Type.FISH).map(Dish::getCalories)
                 .reduce(Integer::min).ifPresent(d -> System.out.println("The fish dish with the minimum calories is " + d));
+
+        // mapToInt converts a stream<Integer> to InStream avoiding hidden boxing costs from reduce(0, Integer::sum)
+        System.out.println("Sum of calories is " + menu.stream().mapToInt(Dish::getCalories).reduce(0, Integer::sum));
+
+        // The IntStream also has common reduction methods like sum that you can leverage. It has a default initial value of 0;
+        System.out.println("Sum of vegetarian calories is " + menu.stream().filter(Dish::isVegetarian)
+                .mapToInt(Dish::getCalories).sum());
+
+        // IntStream max method does not have a default initial value like sum does and therefore return OptionalInt
+        System.out.println("Max of vegetarian calories is " + menu.stream().filter(Dish::isVegetarian)
+                .mapToInt(Dish::getCalories).max().orElse(1)); // orElse provides an explicit default of 1 idf there is no value.
+
+        IntStream exclusiveNumbers = IntStream.range(1,100).filter(n -> n % 10 == 0); // Exclusive range
+        System.out.println("Exclusive number count is " + exclusiveNumbers.count());
+
+        IntStream inclusiveNumbers = IntStream.rangeClosed(1,100).filter(n -> n % 10 == 0); // Inclusive range
+        System.out.println("Inclusive number count is " + inclusiveNumbers.count());
+
+        // Create a Stream<T> using static method Stream.of with any number of arguments.
+        Stream.of("Horatio", "Harper").map(String::toUpperCase).forEach(System.out::println);
+
+        // Create a stream form an array. Gets converted into IntStream because of the sum operation.
+        System.out.println("Sum of 1,2,3 is " + Arrays.stream(new int[] {1,2,3}).sum());
+
+        // Produces an infinite stream of numbers. Expects a lambda argument which it applies successively to each new value produced.
+        Stream.iterate(2, n -> n + 2).limit(4).forEach(System.out::print);
+
+        // Produces an infinite stream of numbers. Expects a Supplier<T> argument which is does not successively apply to each new value produced.
+        Stream.generate(() -> 5).limit(4).forEach(System.out::print);
     }
-
-
 }
