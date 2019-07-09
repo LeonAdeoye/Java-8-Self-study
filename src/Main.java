@@ -1,4 +1,5 @@
 import com.leon.behaviourparam.BehaviourParamMain;
+import com.leon.collect.CollectMain;
 import com.leon.streams.StreamsMain;
 
 public class Main
@@ -7,5 +8,6 @@ public class Main
     {
         new BehaviourParamMain().main();
         new StreamsMain().main();
+        new CollectMain().main();
     }
 }
