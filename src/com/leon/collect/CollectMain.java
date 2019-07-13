@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.*;
 
 public class CollectMain
 {
-    private static Map<String, List<Transaction>> createMapOfCurrecnces(List<Transaction> transactions)
+    private static Map<String, List<Transaction>> createMapOfCurrencies(List<Transaction> transactions)
     {
         Map<String, List<Transaction>> mapOfCurrencies = new HashMap<>();
 
@@ -46,10 +46,10 @@ public class CollectMain
 
         List<Transaction> transactions = Arrays.asList(new Transaction("USD"), new Transaction("GBP"), new Transaction("JPY"));
 
-        Map<String, List<Transaction>> mapOfCurrencies1 = createMapOfCurrecnces(transactions);
+        Map<String, List<Transaction>> mapOfCurrencies1 = createMapOfCurrencies(transactions);
         System.out.println("\nFirst map size: " + mapOfCurrencies1.size());
 
-        // groupingBy create a map whose keys are the buckets and whose values are a list of elements in those buckets.
+        // The groupingBy creates a map whose keys are the buckets and whose values are a list of elements in those buckets.
         Map<String, List<Transaction>> mapOfCurrencies2 = transactions.stream().collect(groupingBy(Transaction::getCurrency));
         System.out.println("Second map size: " + mapOfCurrencies2.size());
 
@@ -61,13 +61,13 @@ public class CollectMain
         Optional<Dish> mostCalorieDish = menu.stream().collect(maxBy(dishCaloriesComparator));
         menu.stream().collect(maxBy(dishCaloriesComparator)).ifPresent(d -> System.out.println("Most calorie dish: " + d));
 
-        //The Collectors class provides a specific factory method for summing: Collectors.summarizingInt.
+        // The Collectors class provides a specific factory method for summing: Collectors.summarizingInt.
         // It accepts a function that maps an object into the int that has to be summarized and returns a
         // collector that, when passed to the usual collect method, performs the requested summarization.
         System.out.println("Calorie: " + menu.stream().collect(Collectors.summarizingInt(Dish::getCalories)));
 
         int totalCalories = menu.stream().collect(summingInt(Dish::getCalories)); // This just get the total
-        double averageCalories = menu.stream().collect(averagingInt(Dish::getCalories)); //This get the average and return double.
+        double averageCalories = menu.stream().collect(averagingInt(Dish::getCalories)); // This get the average and returns double.
 
         // The joining factory method is overloaded to take the delimiter.
         System.out.println("Comma-delimited list of all dishes: " + menu.stream().map(Dish::getName).collect(joining(",")));
@@ -94,5 +94,33 @@ public class CollectMain
                 return Dish.CalorificLevel.HIGH;
         })).forEach((x,y) -> System.out.println("Dish Calorific level " + x + " has " + y.size() + " dishes."));
 
+        //Achieve multi-level grouping using two argument groupingBy factory method which takes any collector method including another groupingBy.
+        Map<Dish.Type, Map<Dish.CalorificLevel,List<Dish>>> multiGroup = menu.stream().collect(groupingBy(Dish::getType, groupingBy(d ->
+        {
+            if(d.getCalories() < 400)
+                return Dish.CalorificLevel.DIET;
+            else if(d.getCalories() < 700)
+                return Dish.CalorificLevel.MODERATE;
+            else
+                return Dish.CalorificLevel.HIGH;
+        })));
+
+        System.out.println("\nMulti-group classification: " + multiGroup);
+
+        // The groupingBy factory method's second argument can take any collector as its second parameter including the counting() method which returns long.
+        // In fact, the one-argument groupingBy(f), where f is the classification function, is actually a shorthand for groupingBy(f, toList()).
+        System.out.println("\nGroup counts: " + menu.stream().collect(groupingBy(Dish::getType, counting())));
+
+        // Special case of grouping using a predicate as classification function to partition a stream in a map with two Boolean key values.
+        Map<Boolean, List<Dish>> partitionedMenu = menu.stream().collect(partitioningBy(Dish::isVegetarian));
+        System.out.println("\nVegetarian Partitioned menu: " + partitionedMenu);
+
+        // The partitioningBy factory method has an overloaded version in which you can pass a collector as second argument just like groupingBy:
+        Map<Boolean, Map<Dish.Type, List<Dish>>> multiPartitionedMenu = menu.stream().collect(partitioningBy(Dish:: isVegetarian, groupingBy(Dish::getType)));
+        System.out.println("\nMulti-partitioned menu: " + multiPartitionedMenu);
+
+        // Overloaded second argument is the counting factory method.
+        Map<Boolean, Long> partitionedMenuCount = menu.stream().collect(partitioningBy(Dish:: isVegetarian, counting()));
+        System.out.println("\nVegetarian partitioned menu count: " + partitionedMenuCount);
     }
 }
