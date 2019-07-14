@@ -2,6 +2,8 @@ package com.leon.collect;
 
 import com.leon.streams.Dish;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -122,5 +124,12 @@ public class CollectMain
         // Overloaded second argument is the counting factory method.
         Map<Boolean, Long> partitionedMenuCount = menu.stream().collect(partitioningBy(Dish:: isVegetarian, counting()));
         System.out.println("\nVegetarian partitioned menu count: " + partitionedMenuCount);
+
+
+        // TODO elsewhere
+        System.out.println(LocalDateTime.now(ZoneId.of("UTC")));
+        System.out.println(LocalDateTime.now(ZoneId.of("UTC")).toLocalDate());
+        System.out.println(LocalDateTime.now().toLocalDate());
+        System.out.println(LocalDateTime.now().toLocalDate().equals(LocalDateTime.now(ZoneId.of("UTC")).toLocalDate()));
     }
 }
