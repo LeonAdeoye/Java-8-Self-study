@@ -18,13 +18,13 @@ public class OptionalMain
         Optional<Car> optionalNullCar1 = Optional.ofNullable(nullCar);
         Optional<Car> optionalNullCar2 = Optional.ofNullable(null);
 
-        // Provide default value in the event that the optional is empty.
+        // Provides a default value in the event that the optional is empty.
         Car porsche = optionalNullCar2.orElse(new Car());
 
         // lazy counterpart of orElse because the supplier is involved only if the optional is empty.
-        Car ferrari = optionalNullCar2.orElse(new Car());
+        Car ferrari = optionalNullCar2.orElseGet(Car::new);
 
-        // only executes consumer if Optional is not empty.
+        // Only executes consumer if Optional is not empty.
         optionalNullCar1.ifPresent(System.out::println);
         car.ifPresent(System.out::println);
 
