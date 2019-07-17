@@ -11,4 +11,12 @@ public class Car
     {
         return this.insurance;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Car {" +
+                "insurance=" + insurance +
+                '}';
+    }
 }
