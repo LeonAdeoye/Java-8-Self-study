@@ -1,5 +1,6 @@
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.collect.CollectMain;
+import com.leon.collections.CollectionsMain;
 import com.leon.optional.OptionalMain;
 import com.leon.streams.StreamsMain;
 
@@ -11,7 +12,6 @@ public class Main
         new StreamsMain().main();
         new CollectMain().main();
         new OptionalMain().main();
-
-
+        new CollectionsMain().main();
     }
 }
