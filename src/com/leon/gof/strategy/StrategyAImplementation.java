@@ -4,6 +4,6 @@ public class StrategyAImplementation implements Strategy
 {
     public void doSomething()
     {
-        System.out.println("\nStrategy_A_Implementation::doSomething");
+        System.out.println("Strategy A implementation doing Something.");
     }
 }

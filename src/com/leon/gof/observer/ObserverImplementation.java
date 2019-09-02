@@ -13,7 +13,7 @@ public class ObserverImplementation implements ObserverInterface
     @Override
     public void update(String newState)
     {
-        System.out.println("\nThe observer named " + name + " has something to say: " + newState);
+        System.out.println("The observer named " + name + " has something to say: " + newState);
     }
 
     @Override
