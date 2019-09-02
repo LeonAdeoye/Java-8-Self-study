@@ -20,7 +20,6 @@ public class GofMain
 
         // Define a one-to-many dependency between objects so that when the object change states,
         // all it dependents are notified and updated automatically.
-
         ObserverInterface saori = new ObserverImplementation("Saori");
         SubjectImplementation subject = new SubjectImplementation();
         subject.attach(new ObserverImplementation("Horatio"));

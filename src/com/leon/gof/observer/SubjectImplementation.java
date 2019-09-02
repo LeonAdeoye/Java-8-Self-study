@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class SubjectImplementation
 {
+    // Knows it observers. Any number of observers may observe the subject.
+    //Send a notification to its observers when the state changes.
     private Map<String, ObserverInterface> observerMap = new HashMap<>();
 
     public void attach(ObserverInterface observer)
