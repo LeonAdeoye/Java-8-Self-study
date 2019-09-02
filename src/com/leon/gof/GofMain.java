@@ -1,15 +1,10 @@
 package com.leon.gof;
 
-import com.leon.gof.decorator.Component;
-import com.leon.gof.decorator.ComponentImplementation;
-import com.leon.gof.decorator.DecoratorAImplementation;
-import com.leon.gof.decorator.DecoratorBImplementation;
-import com.leon.gof.observer.ObserverImplementation;
-import com.leon.gof.observer.ObserverInterface;
-import com.leon.gof.observer.SubjectImplementation;
-import com.leon.gof.strategy.ContextImplementation;
-import com.leon.gof.strategy.StrategyAImplementation;
-import com.leon.gof.strategy.StrategyBImplementation;
+import com.leon.gof.decorator.*;
+import com.leon.gof.observer.*;
+import com.leon.gof.strategy.*;
+import com.leon.gof.templateMethod.*;
+
 
 public class GofMain
 {
@@ -52,5 +47,13 @@ public class GofMain
 
         Component decoratorC = new DecoratorBImplementation(decoratorA);
         decoratorC.doSomething();
+
+        // Define a skeleton of an algorithm in an operation deferring steps to the subclasses.
+        // Template method design pattern lets subclasses redefine certain steps on an algorithm without changing the structure of the algorithm.
+        TemplateMethodInterface templateMethodA = new TemplateMethodAImplementation();
+        templateMethodA.templateMethod();
+
+        TemplateMethodInterface templateMethodB = new TemplateMethodBImplementation();
+        templateMethodB.templateMethod();
     }
 }
