@@ -2,8 +2,10 @@ package com.leon.gof;
 
 import com.leon.gof.adapter.Adapter;
 import com.leon.gof.adapter.Target;
+import com.leon.gof.bridge.*;
 import com.leon.gof.decorator.*;
 import com.leon.gof.facade.Facade;
+import com.leon.gof.mediator.*;
 import com.leon.gof.observer.*;
 import com.leon.gof.singleton.Singleton;
 import com.leon.gof.strategy.*;
@@ -72,5 +74,34 @@ public class GofMain
         // The class can ensure that no other instances can be created (by intercepting requests to create new objects), and provide a way to access to access to single instances.
         Singleton singleton = Singleton.getInstance();
         singleton.doSomething();
+
+        // Defines an object that encapsulates how a set of objects interact.
+        // Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and lets you vary their interaction independently.
+        Mediator mediator = new MediatorImplementation(); // Defines the mediator interface enabling a community of colleague objects to interact.
+        Colleague a = new ColleagueAImplementation(mediator); // Each colleague knows its mediator objects.
+        // The colleague classes are decoupled, adding a new colleague does not impact mediation.
+        Colleague b = new ColleagueBImplementation(mediator);
+
+        // Each colleague communicates with its mediator whenever it would have otherwise communicated with another colleague directly.
+        a.sendMessage("Hi Horatio");
+        b.receiveMessage();
+
+        // Reduces communication channels between colleagues since a colleague only has to communicate with the mediator.
+        b.sendMessage("Hi Harper");
+        a.receiveMessage();
+
+        // Decouples an abstraction from it implementation so that the two can vary independently.
+        // Divides the abstraction and the implementation into separate class hierarchies.
+        // Changes in the implementation of an abstraction should not have an impact on clients.
+        Implementor impA = new ImplementorA();
+        Implementor impB = new ImplementorB();
+
+        // Implementation of an abstraction can be configured at runtime.
+        Client clientA = new Client(new AbtractionImplementation(impA));
+        clientA.doSomething();
+
+        Client clientB = new Client(new AbtractionImplementation(impB));
+        clientB.doSomething();
+
     }
 }
