@@ -45,7 +45,7 @@ public class BehaviourParamMain
 
     public static <T> void printItems(String property, List<T> list)
     {
-        System.out.println("\nCount of " + property + " items: " + list.size() + ". Here is the list of them:");
+        System.out.println("\nCount of '" + property + "' items: " + list.size() + ". Here is the list of them:");
 
         for (T s : list)
         {
@@ -98,7 +98,7 @@ public class BehaviourParamMain
         System.out.println("\nOut of " + people.size() + " items there were " + blanks.size() + " blanks!");
 
         List<Integer> lengths = filter(Arrays.asList("Horatio", "", "Harper"), (String s) -> s.length()); // Function functional interface passed in.
-        printItems("string", lengths);
+        printItems("string length", lengths);
 
         // IntPredicate is a specialized version of a functional interface which avoids autoboxing operations when the input/outputs are primitives.
         IntPredicate evenNumbers = (int i) -> i % 2 == 0;
@@ -107,7 +107,7 @@ public class BehaviourParamMain
         Predicate<Integer> oddNumbers = (Integer i) -> i % 2 != 0;
         System.out.println("1000 is an odd number: " + oddNumbers.test(1000)); // Boxing occurs because primitive time is boxed to explicitly declared Integer.
 
-        // IntBinaryOperator a single binary operator called applyAsInt representing the function descriptor (int,int) -> int.
+        // IntBinaryOperator has a single binary operator called applyAsInt representing the function descriptor (int,int) -> int.
         IntBinaryOperator sum = (int a, int b) -> a + b; // IntBinaryOperator sum = (a, b) -> a + b; primitive type of lambda parameters deduced/inferred by the compiler.
         System.out.println("\nThe sum of 5 and 10 is " + sum.applyAsInt(5,10));
 
@@ -116,7 +116,7 @@ public class BehaviourParamMain
         System.out.println("\nThe length of the string 'Horatio' is " + stringLengths.applyAsInt("Horatio"));
 
         int portNumber = 1337;
-        Consumer<Integer> consumer = (i) -> System.out.println("Port number is " + portNumber);
+        Consumer<Integer> consumer = (Integer i) -> System.out.println("Port number is " + portNumber);
         consumer.accept(100);
         // Local variables referenced from a lambda expression must be explicitly declared final or effectively be final to be 'captured'.
         // portNumber = 8080;
@@ -130,21 +130,22 @@ public class BehaviourParamMain
         System.out.println("\nThe length of the string 'Saori' is " + strLen.applyAsInt("Saori"));
 
         Transaction transaction = new Transaction();
-        // Method reference is an instance method of the above existing instantiated object. Function return double primitive type and accept int primitive type WITHOUT boxing.
+        // Method reference is an instance method of the above existing instantiated object. Function returns double primitive type and accept int primitive type WITHOUT boxing.
         IntToDoubleFunction expensive = transaction::getCostInUSD;
         System.out.println("\nThe cost of this 100 pounds transaction in USD is " + expensive.applyAsDouble(100));
         // Method reference is an instance method of the class String.
         BiPredicate<List<String>,String> contains = List::contains;
         System.out.println("\nIs 'Harper' in the list of string: " + contains.test(Arrays.asList("Horatio", "Harper"), "Harper"));
-        System.out.println("\nIs 'Saori' in the list of string: " + contains.test(Arrays.asList("Horatio", "Harper"), "Saori"));
+        System.out.println("Is 'Saori' in the list of string: " + contains.test(Arrays.asList("Horatio", "Harper"), "Saori"));
 
         // Method reference is an existing default constructor of an Apple
         Supplier<Apple> appleSupplier = Apple::new;
         Apple yellowApple = appleSupplier.get();  // Equivalent to: appleSupplier = () -> new Apple();
 
         IntFunction<Apple> heavyAppleFunc = Apple::new;
-        Apple heavyRedApple = heavyAppleFunc.apply(200); // Equivalent to: heavyAppleFunc = (weight) -> new Apple(weight);
+        Apple heavyRedApple = heavyAppleFunc.apply(200); // Equivalent to: heavyAppleFunc = (weight) -> new Apple(weight); // The correct constructor is chosen.
 
+        // public static <T,R> List<R> map(List<T> list, Function<T,R> func)
         for(Apple apple : (map(Arrays.asList(100,130,160), Apple::new))) // Second argument is equivalent to (weight) -> new Apple(weight)
         {
             System.out.println(apple);
@@ -154,7 +155,7 @@ public class BehaviourParamMain
         Predicate<Apple> freshApplePredicate = spoiledApplePredicate.negate(); // Functional interface's convenience default method NEGATE.
         Predicate<Apple> premiumApplePredicate = freshApplePredicate.and(a -> a.getWeight() == 150); // Functional interface's convenience default method AND.
         Predicate<Apple> premiumBritishApplePredicate = premiumApplePredicate.or(a -> a.getWeight() >= 170); // Functional interface's convenience default method OR.
-        printItems("premiums", filter(apples, premiumBritishApplePredicate));
+        printItems("premium apple", filter(apples, premiumBritishApplePredicate));
 
         // The interface default method andThen returns a function 'h' that first applies a given function 'f'
         // to an input and then applies another function 'g' to the result of that application: g(f(x)).

@@ -64,7 +64,7 @@ public class StreamsMain
         Arrays.asList(1,2,3,4,5,6,7,8).stream().map(x -> x * x).filter(x -> x % 3 == 0)
                 .findFirst().ifPresent(System.out::println);
 
-        //findFirst and findAny do not take params they rely on the filter method.
+        // findFirst and findAny do not take params they rely on the filter method.
         menu.stream().filter(Dish::isVegetarian).findAny().ifPresent(d -> System.out.println(d.getName()));
 
         // Reduce terminal method takes two arguments: the initial value (below is 0),
@@ -99,7 +99,7 @@ public class StreamsMain
 
         // IntStream max method does not have a default initial value like sum does and therefore return OptionalInt
         System.out.println("Max of vegetarian calories is " + menu.stream().filter(Dish::isVegetarian)
-                .mapToInt(Dish::getCalories).max().orElse(1)); // orElse provides an explicit default of 1 idf there is no value.
+                .mapToInt(Dish::getCalories).max().orElse(1)); // orElse provides an explicit default of 1 if there is no value.
 
         IntStream exclusiveNumbers = IntStream.range(1,100).filter(n -> n % 10 == 0); // Exclusive range
         System.out.println("Exclusive number count is " + exclusiveNumbers.count());
