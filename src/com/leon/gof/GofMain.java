@@ -109,9 +109,12 @@ public class GofMain
 
         // Command pattern decouples the object that invokes the operation from the one that knows how to perform it.
         Receiver receiver = new Receiver();
+        // Client create a command implementation and specifies a receiver.
         Command command = new CommandImplementation(receiver);
         Invoker invoker = new Invoker();
+        // Invoker stores the command object.
         invoker.setCommand(command);
+        // Invoker issues a request by calling Execute on the command.
         invoker.execute();
 
     }

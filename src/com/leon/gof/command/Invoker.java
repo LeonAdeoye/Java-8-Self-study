@@ -1,5 +1,6 @@
 package com.leon.gof.command;
 
+// Invoker asks the command to carry out the requests.
 public class Invoker
 {
     private Command command;
