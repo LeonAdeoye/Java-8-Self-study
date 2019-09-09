@@ -3,6 +3,10 @@ package com.leon.gof;
 import com.leon.gof.adapter.Adapter;
 import com.leon.gof.adapter.Target;
 import com.leon.gof.bridge.*;
+import com.leon.gof.command.Command;
+import com.leon.gof.command.CommandImplementation;
+import com.leon.gof.command.Invoker;
+import com.leon.gof.command.Receiver;
 import com.leon.gof.decorator.*;
 import com.leon.gof.facade.Facade;
 import com.leon.gof.mediator.*;
@@ -102,6 +106,13 @@ public class GofMain
 
         Client clientB = new Client(new AbtractionImplementation(impB));
         clientB.doSomething();
+
+        // Command pattern decouples the object that invokes the operation from the one that knows how to perform it.
+        Receiver receiver = new Receiver();
+        Command command = new CommandImplementation(receiver);
+        Invoker invoker = new Invoker();
+        invoker.setCommand(command);
+        invoker.execute();
 
     }
 }
