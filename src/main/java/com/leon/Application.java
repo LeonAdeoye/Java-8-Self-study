@@ -3,6 +3,7 @@ package com.leon;
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
+import com.leon.jackson.JacksonMain;
 import com.leon.optional.OptionalMain;
 import com.leon.streams.StreamsMain;
 import com.leon.gof.GofMain;
@@ -21,5 +22,6 @@ public class Application
         new OptionalMain().main();
         new CollectionsMain().main();
         new GofMain().main();
+        new JacksonMain().main();
     }
 }
