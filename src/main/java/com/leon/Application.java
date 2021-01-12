@@ -5,9 +5,9 @@ import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
 import com.leon.jackson.JacksonMain;
 import com.leon.optional.OptionalMain;
+import com.leon.reactor.ReactorMain;
 import com.leon.streams.StreamsMain;
 import com.leon.gof.GofMain;
-import com.leon.webclient.WebClientMain;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -24,6 +24,6 @@ public class Application
         new CollectionsMain().main();
         new GofMain().main();
         new JacksonMain().main();
-        new WebClientMain().main();
+        new ReactorMain().main();
     }
 }
