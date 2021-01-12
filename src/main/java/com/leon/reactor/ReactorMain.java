@@ -22,6 +22,8 @@ public class ReactorMain
                 });
 
         // The subscribe method collects elements in the stream.
+        // The core difference is that Reactive is a push model, whereas the Java 8 Streams are a pull model.
+        // In a reactive approach, events are pushed to the subscribers as they come in.
         ints.subscribe((Integer i) -> System.out.println(i),
                 error -> System.err.println("Flux Error: " + error));
 
@@ -40,24 +42,49 @@ public class ReactorMain
                 .subscribe(list::add);
         list.forEach(System.out::println);
 
-        subSCriberInterface();
+        backPressureSubscriber();
+        mapStream();
     }
 
-    private void subSCriberInterface()
+    private void mapStream()
     {
+        Flux<Integer> ints = Flux.range(1, 10)
+                .map((Integer i) -> i * 10);
+
+        ints.subscribe((Integer i) -> System.out.println(i));
+    }
+
+    private void backPressureSubscriber()
+    {
+        // In the above example, the subscriber is telling the producer to push every single element at once.
+        // This could end up becoming overwhelming for the subscriber, consuming all of its resources.
+        // Backpressure is when a downstream can tell an upstream to send it fewer data in order to prevent it from being overwhelmed.
+        // We can modify our Subscriber implementation to apply backpressure.
+        // Let's tell the upstream to only send two elements at a time by using request():
         List<Integer> elements = new ArrayList<>();
 
-        Flux.just(11, 12, 13, 14)
+        Flux.just(11, 12, 13, 14, 15, 16, 17, 18)
                 .log()
-                .subscribe(new Subscriber<Integer>() {
+                .subscribe(new Subscriber<Integer>()
+                {
+                    private Subscription subscription;
+                    private int next = 0;
+
                     @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
+                    public void onSubscribe(Subscription subscription)
+                    {
+                        this.subscription = subscription;
+                        subscription.request(3);
                     }
 
                     @Override
-                    public void onNext(Integer integer) {
+                    public void onNext(Integer integer)
+                    {
+                        // In logs, we'll see the request(3) is called, followed by three onNext() calls, then request(3) again, etc.
                         elements.add(integer);
+                        next++;
+                        if(next % 3 == 0)
+                            this.subscription.request(3);
                     }
 
                     @Override
