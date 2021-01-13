@@ -1,10 +1,10 @@
 package com.leon.reactor;
 
 import reactor.core.publisher.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.reactivestreams.*;
+import java.util.Random;
 
 public class ReactorMain
 {
@@ -44,6 +44,12 @@ public class ReactorMain
 
         backPressureSubscriber();
         mapStream();
+        zipWith();
+
+        // You can cold streams and hot stream.
+        // Cold stream are static fixed length streams
+        // while hot streams are always running and can be subscribed to at any point missing the start of the data.
+        hotTimeStream(3);
     }
 
     private void mapStream()
@@ -52,6 +58,41 @@ public class ReactorMain
                 .map((Integer i) -> i * 10);
 
         ints.subscribe((Integer i) -> System.out.println(i));
+    }
+
+    private void zipWith()
+    {
+        Flux.range(1,5)
+            .map((Integer i) -> i * 2)
+            .zipWith(Flux.range(0, Integer.MAX_VALUE), (Integer left, Integer right) -> String.format("left: %d and right: %d", left, right))
+            .subscribe((String result) -> System.out.println(result));
+    }
+
+    private void hotTimeStream(int maxCount)
+    {
+        ConnectableFlux<Object> publish = Flux.create(fluxSink ->
+        {
+            int currentCount = 1;
+            while(maxCount == 0 || currentCount <= maxCount )
+            {
+                fluxSink.next(System.currentTimeMillis());
+                try
+                {
+                    int sleepTime = new Random().nextInt(4) + 1;
+                    System.out.println("sleeping for " + sleepTime + " second(s).");
+                    Thread.sleep(sleepTime * 1000);
+                }
+                catch(InterruptedException ie) {}
+                currentCount++;
+            }
+            System.out.println("\nFinished Publishing " + (currentCount - 1) + " times.");
+        })
+        .publish(); // By calling publish we are returning a ConnectableFlux.
+
+        // But calling subscribe will not cause it to emit, allowing us to add multiple subscriptions without missing anything at the beginning.
+        publish.subscribe(System.out::println);
+        // It is only when we call connect will the flux start emitting.
+        publish.connect();
     }
 
     private void backPressureSubscriber()
