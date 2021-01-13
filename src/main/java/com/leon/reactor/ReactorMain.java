@@ -50,6 +50,7 @@ public class ReactorMain
         // Cold stream are static fixed length streams
         // while hot streams are always running and can be subscribed to at any point missing the start of the data.
         hotTimeStream(3);
+        baseSubscriber();
     }
 
     private void mapStream()
@@ -65,7 +66,13 @@ public class ReactorMain
         Flux.range(1,5)
             .map((Integer i) -> i * 2)
             .zipWith(Flux.range(0, Integer.MAX_VALUE), (Integer left, Integer right) -> String.format("left: %d and right: %d", left, right))
-            .subscribe((String result) -> System.out.println(result));
+            .subscribe(System.out::println);
+    }
+
+    private void baseSubscriber()
+    {
+        Flux<Integer> nums = Flux.range(10,3);
+        nums.subscribe(new SampleSubscriber<Integer>());
     }
 
     private void hotTimeStream(int maxCount)
