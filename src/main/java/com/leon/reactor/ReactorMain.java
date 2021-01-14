@@ -1,6 +1,7 @@
 package com.leon.reactor;
 
 import reactor.core.publisher.*;
+import reactor.core.scheduler.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.reactivestreams.*;
@@ -49,6 +50,7 @@ public class ReactorMain
         generate();
         handle();
         thread();
+        switchThread();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -128,6 +130,20 @@ public class ReactorMain
             th.join();
         }
         catch(InterruptedException ie) {}
+    }
+
+    private void switchThread()
+    {
+        System.out.println("\nswitching threads...");
+        Scheduler scheduler = Schedulers.newParallel("parallel threads", 4);
+
+        final Flux<String> flux = Flux.range(1,2)
+            .log()
+            .map(i -> i + " + " + Thread.currentThread().getName())
+            .publishOn(scheduler)
+            .map(i -> i + " + " + Thread.currentThread().getName());
+
+        flux.subscribe(System.out::println);
     }
 
     private void hotTimeStream(int maxCount)
