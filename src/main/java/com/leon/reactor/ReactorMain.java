@@ -47,6 +47,7 @@ public class ReactorMain
         zipWith();
         baseSubscriber();
         generate();
+        handle();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -88,6 +89,26 @@ public class ReactorMain
                 }
         );
         flux.subscribe(System.out::println);
+    }
+
+    private String alphabet(int number)
+    {
+        if(number < 1 || number > 26)
+            return null;
+        else
+            return String.format("valid string: %s", number);
+    }
+
+    private void handle()
+    {
+        Flux.just(-1, 0, 10, 20, 30)
+            .handle((number, sink) -> {
+                String result = alphabet(number);
+                // Only call next if the result is not null
+                if(result != null)
+                    sink.next(result);
+            })
+            .subscribe(System.out::println);
     }
 
     private void hotTimeStream(int maxCount)
