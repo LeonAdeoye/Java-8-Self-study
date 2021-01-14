@@ -48,6 +48,7 @@ public class ReactorMain
         baseSubscriber();
         generate();
         handle();
+        thread();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -109,6 +110,24 @@ public class ReactorMain
                     sink.next(result);
             })
             .subscribe(System.out::println);
+    }
+
+    private void thread()
+    {
+        try
+        {
+            Mono<String> mono = Mono.just("hello");
+            System.out.println("Mono creation thread: " + Thread.currentThread().getName());
+
+            Thread th = new Thread(() -> {
+                mono.map((String msg) -> msg + " map thread ")
+                    .subscribe(v -> System.out.println(v + Thread.currentThread().getName()));
+            });
+
+            th.start();
+            th.join();
+        }
+        catch(InterruptedException ie) {}
     }
 
     private void hotTimeStream(int maxCount)
