@@ -45,12 +45,13 @@ public class ReactorMain
         backPressureSubscriber();
         mapStream();
         zipWith();
+        baseSubscriber();
+        generate();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
         // while hot streams are always running and can be subscribed to at any point missing the start of the data.
         hotTimeStream(3);
-        baseSubscriber();
     }
 
     private void mapStream()
@@ -73,6 +74,20 @@ public class ReactorMain
     {
         Flux<Integer> nums = Flux.range(10,3);
         nums.subscribe(new SampleSubscriber<Integer>());
+    }
+
+    private void generate()
+    {
+        Flux<String> flux = Flux.generate(
+                () -> 0,
+                (state, sink) ->
+                {
+                    sink.next("3 x " + state + " = " + (3 * state) );
+                    if(state == 10) sink.complete();
+                    return state + 1;
+                }
+        );
+        flux.subscribe(System.out::println);
     }
 
     private void hotTimeStream(int maxCount)
