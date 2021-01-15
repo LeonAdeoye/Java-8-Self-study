@@ -3,6 +3,7 @@ package com.leon.reactor;
 import reactor.core.publisher.*;
 import reactor.core.scheduler.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.reactivestreams.*;
 import java.util.Random;
@@ -51,6 +52,7 @@ public class ReactorMain
         handle();
         thread();
         switchThread();
+        creatingFluxes();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -171,6 +173,14 @@ public class ReactorMain
         publish.subscribe(System.out::println);
         // It is only when we call connect will the flux start emitting.
         publish.connect();
+    }
+
+    private void creatingFluxes()
+    {
+        List<String> stringList = Arrays.asList("horatio", "harper");
+        Flux<String> fluxFromList = Flux.fromIterable(stringList);
+        Flux<String> fluxFromStream = Flux.fromStream(stringList.stream());
+        fluxFromStream.subscribe(System.out::println);
     }
 
     private void backPressureSubscriber()
