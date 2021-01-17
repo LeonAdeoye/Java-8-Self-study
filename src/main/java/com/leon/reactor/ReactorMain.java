@@ -54,6 +54,7 @@ public class ReactorMain
         switchThread();
         creatingFluxes();
         creatingMono();
+        filter();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -81,6 +82,13 @@ public class ReactorMain
     {
         Flux<Integer> nums = Flux.range(10,3);
         nums.subscribe(new SampleSubscriber<Integer>());
+    }
+
+    private void filter()
+    {
+        System.out.println("Even numbers: " );
+        Flux<Integer> nums = Flux.range(1,7);
+        nums.filter((Integer i) -> i % 2 == 0).subscribe(System.out::println);
     }
 
     private void generate()
