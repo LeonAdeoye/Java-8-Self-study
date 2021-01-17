@@ -53,9 +53,11 @@ public class ReactorMain
         thread();
         switchThread();
         creatingFluxes();
-        creatingMono();
         filter();
+        buffer();
 
+
+        creatingMono();
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
         // while hot streams are always running and can be subscribed to at any point missing the start of the data.
@@ -89,6 +91,13 @@ public class ReactorMain
         System.out.println("Even numbers: " );
         Flux<Integer> nums = Flux.range(1,7);
         nums.filter((Integer i) -> i % 2 == 0).subscribe(System.out::println);
+    }
+
+    private void buffer()
+    {
+        Flux.range(1, 18)
+            .buffer(5)
+            .subscribe((List<Integer> bufferedList)-> System.out.println("Buffer size is: " + bufferedList.size() + " and the current elements are " + bufferedList.toString()));
     }
 
     private void generate()
