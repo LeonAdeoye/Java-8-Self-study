@@ -209,8 +209,12 @@ public class ReactorMain
     private void creatingFluxes()
     {
         List<String> stringList = Arrays.asList("horatio", "harper");
+        // You can create an array from iterable
         Flux<String> fluxFromList = Flux.fromIterable(stringList);
+        // You can create an array from a stream
         Flux<String> fluxFromStream = Flux.fromStream(stringList.stream());
+        // You can create an flux from an array
+        Flux<Integer> fluxFromArray = Flux.fromArray(new Integer[] {5,8,9});
         fluxFromStream.subscribe(System.out::println);
     }
 
