@@ -53,6 +53,7 @@ public class ReactorMain
         thread();
         switchThread();
         creatingFluxes();
+        creatingMono();
 
         // You can cold streams and hot stream.
         // Cold stream are static fixed length streams
@@ -183,12 +184,20 @@ public class ReactorMain
         fluxFromStream.subscribe(System.out::println);
     }
 
+    private void creatingMono()
+    {
+        // A method called Mono.fromCallable is observed, and this method expects that the supplier method returns a type Mono, which is non-blocking.
+        Mono<String> mono = Mono.fromCallable(() -> alphabet(14));
+        // elastic() is considered as the default Scheduler
+        mono.log().subscribeOn(Schedulers.elastic()).subscribe(System.out::println);
+    }
+
     private void backPressureSubscriber()
     {
         // In the above example, the subscriber is telling the producer to push every single element at once.
         // This could end up becoming overwhelming for the subscriber, consuming all of its resources.
-        // Backpressure is when a downstream can tell an upstream to send it fewer data in order to prevent it from being overwhelmed.
-        // We can modify our Subscriber implementation to apply backpressure.
+        // Back pressure is when a downstream can tell an upstream to send it fewer data in order to prevent it from being overwhelmed.
+        // We can modify our Subscriber implementation to apply back pressure.
         // Let's tell the upstream to only send two elements at a time by using request():
         List<Integer> elements = new ArrayList<>();
 
