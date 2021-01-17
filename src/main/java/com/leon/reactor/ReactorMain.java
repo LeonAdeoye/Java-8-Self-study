@@ -56,6 +56,7 @@ public class ReactorMain
         filter();
         buffer();
         allorany();
+        blockLast();
 
 
         creatingMono();
@@ -236,6 +237,12 @@ public class ReactorMain
         Mono<String> mono = Mono.fromCallable(() -> alphabet(14));
         // elastic() is considered as the default Scheduler
         mono.log().subscribeOn(Schedulers.elastic()).subscribe(System.out::println);
+    }
+
+    private void blockLast()
+    {
+        Flux<Integer> blockLastFlux = Flux.range(1,9);
+        System.out.println("Blocks the first 8 in the range 1-9 and then emits the last one: " + blockLastFlux.blockLast());
     }
 
     private void backPressureSubscriber()
