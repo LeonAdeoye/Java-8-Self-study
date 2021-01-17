@@ -157,13 +157,26 @@ public class ReactorMain
         System.out.println("\nswitching threads...");
         Scheduler scheduler = Schedulers.newParallel("parallel threads", 4);
 
-        final Flux<String> flux = Flux.range(1,2)
+        // The difference between publishOn and subscribeOn is that publishOn only changes the downstream thread
+        // while subscribeOn changes both the upstream and downstream thread.
+
+        // On the second map operation is on a different downstream thread
+        final Flux<String> fluxPublishOn = Flux.range(1,2)
             .log()
             .map(i -> i + " + " + Thread.currentThread().getName())
             .publishOn(scheduler)
             .map(i -> i + " + " + Thread.currentThread().getName());
 
-        flux.subscribe(System.out::println);
+        fluxPublishOn.subscribe(System.out::println);
+
+        // Both map operators are on another thread both upstream and downstream.
+        final Flux<String> fluxSubscribeOn = Flux.range(1,2)
+                .log()
+                .map(i -> i + " + " + Thread.currentThread().getName())
+                .subscribeOn(scheduler)
+                .map(i -> i + " + " + Thread.currentThread().getName());
+
+        fluxSubscribeOn.subscribe(System.out::println);
     }
 
     private void hotTimeStream(int maxCount)
