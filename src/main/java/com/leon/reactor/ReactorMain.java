@@ -55,6 +55,7 @@ public class ReactorMain
         creatingFluxes();
         filter();
         buffer();
+        allorany();
 
 
         creatingMono();
@@ -216,6 +217,17 @@ public class ReactorMain
         // You can create an flux from an array
         Flux<Integer> fluxFromArray = Flux.fromArray(new Integer[] {5,8,9});
         fluxFromStream.subscribe(System.out::println);
+    }
+
+    private void allorany()
+    {
+        Flux<Integer> anyFlux = Flux.range(1,9);
+        Mono<Boolean> anyResult = anyFlux.any((Integer element) -> element % 2 == 0);
+        Mono<Boolean> allEvenResult = anyFlux.all((Integer element) -> element % 2 == 0);
+        Mono<Boolean> allResult = anyFlux.all((Integer element) -> element < 11);
+        anyResult.subscribe((res) -> System.out.println("There are some even numbers in the flux: " + res));
+        allEvenResult.subscribe((res) -> System.out.println("There are only even numbers in the flux: " + res));
+        allResult.subscribe((res) -> System.out.println("The numbers in the flux are less then 10: " + res));
     }
 
     private void creatingMono()
