@@ -2,6 +2,7 @@ package com.leon.reactor;
 
 import reactor.core.publisher.*;
 import reactor.core.scheduler.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +59,6 @@ public class ReactorMain
         allorany();
         blockLast();
         collect();
-
 
         creatingMono();
         // You can cold streams and hot stream.
@@ -236,7 +236,10 @@ public class ReactorMain
     {
         // Collect all elements emitted by this Flux into a user-defined container, by applying a collector BiConsumer taking the container and each element.
         // The collected result will be emitted when this sequence completes.
-        Flux.range(1, 10).collect(ArrayList<Integer>::new, ArrayList::add).subscribe(System.out::println);
+        Flux.range(1, 20).collect(ArrayList<Integer>::new, ArrayList::add).subscribe(System.out::println);
+
+        Mono<List<Integer>> result = Flux.range(20,10).collectList();
+        result.subscribe(System.out::println);
     }
 
     private void creatingMono()
