@@ -57,6 +57,7 @@ public class ReactorMain
         buffer();
         allorany();
         blockLast();
+        collect();
 
 
         creatingMono();
@@ -229,6 +230,13 @@ public class ReactorMain
         anyResult.subscribe((res) -> System.out.println("There are some even numbers in the flux: " + res));
         allEvenResult.subscribe((res) -> System.out.println("There are only even numbers in the flux: " + res));
         allResult.subscribe((res) -> System.out.println("The numbers in the flux are less then 10: " + res));
+    }
+
+    private void collect()
+    {
+        // Collect all elements emitted by this Flux into a user-defined container, by applying a collector BiConsumer taking the container and each element.
+        // The collected result will be emitted when this sequence completes.
+        Flux.range(1, 10).collect(ArrayList<Integer>::new, ArrayList::add).subscribe(System.out::println);
     }
 
     private void creatingMono()
