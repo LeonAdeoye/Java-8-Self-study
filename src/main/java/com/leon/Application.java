@@ -19,6 +19,7 @@ public class Application
     public static void main(String[] args)
     {
         SpringApplication.run(Application.class, args);
+
         new BehaviourParamMain().main();
         new StreamsMain().main();
         new CollectMain().main();
@@ -29,5 +30,6 @@ public class Application
         new ReactorMain().main();
         ProofOfWork.main();
         MultiThreadMain.main();
+        MapExample.main();
     }
 }
