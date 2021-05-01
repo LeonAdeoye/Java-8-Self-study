@@ -5,6 +5,7 @@ import com.leon.bitcoin.ProofOfWork;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
 import com.leon.jackson.JacksonMain;
+import com.leon.multithread.MultiThreadMain;
 import com.leon.optional.OptionalMain;
 import com.leon.reactor.ReactorMain;
 import com.leon.streams.StreamsMain;
@@ -27,5 +28,6 @@ public class Application
         new JacksonMain().main();
         new ReactorMain().main();
         ProofOfWork.main();
+        MultiThreadMain.main();
     }
 }

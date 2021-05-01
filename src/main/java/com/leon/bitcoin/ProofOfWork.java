@@ -18,7 +18,7 @@ public class ProofOfWork
         String result = "";
         ProofOfWork pow = new ProofOfWork();
 
-        for(int difficulty_bits = 0;  difficulty_bits < 32; ++difficulty_bits)
+        for(int difficulty_bits = 0;  difficulty_bits < 22; ++difficulty_bits)
         {
             difficulty = Math.pow(2, difficulty_bits);
 
@@ -41,7 +41,7 @@ public class ProofOfWork
     public String prove(String header, int difficulty_bits)
     {
         double target = Math.pow(2, 256 - difficulty_bits);
-        double max_nonce = Math.pow(2,32);
+        double max_nonce = Math.pow(2,22);
         String hashResultInHex = "";
         System.out.println("Difficulty bit is " + difficulty_bits + " and target is " + target);
 
