@@ -22,5 +22,14 @@ public class MapExample
         BiFunction<String, String, String> biresult = (k, y) -> k + "'s " + y + " was a good book!";
         books.computeIfPresent("Dickens", biresult);
         System.out.println(books.get("Dickens"));
+
+        // If the given key is present in the map then return the value and leave the map untouched.
+        books.putIfAbsent("Dickens", "David Copperfield");
+        // If the given key is absent in the map then adds the new key and value and returns null.
+        books.putIfAbsent("Dumas", "Count of Montecristo");
+
+        books.replace("Standahl", "The Red and the black");
+
+        System.out.println(books);
     }
 }
