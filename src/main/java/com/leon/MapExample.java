@@ -18,5 +18,9 @@ public class MapExample
         Function<String, String> result = (k) -> k + " book";
         books.computeIfAbsent("Standahl", result);
         System.out.println(books.get("Standahl"));
+
+        BiFunction<String, String, String> biresult = (k, y) -> k + "'s " + y + " was a good book!";
+        books.computeIfPresent("Dickens", biresult);
+        System.out.println(books.get("Dickens"));
     }
 }
