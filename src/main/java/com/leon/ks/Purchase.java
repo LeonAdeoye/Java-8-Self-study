@@ -11,6 +11,7 @@ public class Purchase
     private List<String> itemsPurchased;
     private LocalDateTime transactionTime;
     private String creditCardNumber;
+    private String postCode;
 
     public String getCustomerID()
     {
@@ -62,6 +63,16 @@ public class Purchase
         this.creditCardNumber = creditCardNumber;
     }
 
+    public String getPostCode()
+    {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode)
+    {
+        this.postCode = postCode;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -72,6 +83,7 @@ public class Purchase
                 Objects.equals(getCustomerID(), purchase.getCustomerID()) &&
                 Objects.equals(getItemsPurchased(), purchase.getItemsPurchased()) &&
                 Objects.equals(getTransactionTime(), purchase.getTransactionTime()) &&
+                Objects.equals(getPostCode(), purchase.getPostCode()) &&
                 Objects.equals(getCreditCardNumber(), purchase.getCreditCardNumber());
     }
 
@@ -87,6 +99,7 @@ public class Purchase
         return "Purchase{" +
                 "customerID='" + customerID + '\'' +
                 ", amountSpend=" + amountSpend +
+                ", postCode=" + postCode +
                 ", itemsPurchased=" + itemsPurchased +
                 ", transactionTime=" + transactionTime +
                 ", creditCardNumber='" + creditCardNumber + '\'' +
