@@ -93,7 +93,7 @@ public class BehaviourParamMain
         System.out.println(processFile((BufferedReader br)-> "\nThis is the first line: " + br.readLine()));
 
         ArrayList<String> people = new ArrayList<>(Arrays.asList("Horatio", " ", "Harper"));
-        List<String> blanks = filter(people, (String s) -> s.isBlank());  // Predicate functional interface
+        List<String> blanks = filter(people, (String s) -> s.isEmpty());  // Predicate functional interface
         System.out.println("\nOut of " + people.size() + " items there were " + blanks.size() + " blanks!");
 
         List<Integer> lengths = filter(Arrays.asList("Horatio", "", "Harper"), (String s) -> s.length()); // Function functional interface passed in.
