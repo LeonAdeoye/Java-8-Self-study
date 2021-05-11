@@ -13,7 +13,6 @@ import com.leon.streams.StreamsMain;
 import com.leon.gof.GofMain;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Application
@@ -21,8 +20,6 @@ public class Application
     public static void main(String[] args)
     {
         SpringApplication.run(Application.class, args);
-
-        ApplicationStarter.verifyServices();
 
         new BehaviourParamMain().main();
         new StreamsMain().main();
@@ -35,5 +32,6 @@ public class Application
         ProofOfWork.main();
         MultiThreadMain.main();
         MapExample.main();
+        ApplicationStarter.verifyServices();
     }
 }

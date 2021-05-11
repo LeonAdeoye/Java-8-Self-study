@@ -13,6 +13,7 @@ public class ApplicationStarter
 
     public static void verifyServices()
     {
+        System.out.println("\nCount down latch example - verifying from now...");
         latch = new CountDownLatch(2);
         listOfVerifiers = new ArrayList<>();
         listOfVerifiers.add(new WorkbenchServiceVerifier("query-service", latch));
