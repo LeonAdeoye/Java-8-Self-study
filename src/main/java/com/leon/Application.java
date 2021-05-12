@@ -2,6 +2,7 @@ package com.leon;
 
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.bitcoin.ProofOfWork;
+import com.leon.blockQ.BlockingQueueExample;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
 import com.leon.jackson.JacksonMain;
@@ -33,5 +34,6 @@ public class Application
         MultiThreadMain.main();
         MapExample.main();
         ApplicationStarter.verifyServices();
+        BlockingQueueExample.start();
     }
 }
