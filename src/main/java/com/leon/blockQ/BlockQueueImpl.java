@@ -48,11 +48,19 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
     {
         long timeout = TimeUnit.MILLISECONDS.convert(duration, timeUnit);
         Instant start = Instant.now();
+        boolean outputFlag = true;
 
         while(queue.size() == maxSize)
         {
             if(Duration.between(start, Instant.now()).toMillis() >= timeout)
+            {
+                if(outputFlag)
+                {
+                    outputFlag = false;
+                    System.out.println("offer::timeout");
+                }
                 return false;
+            }
         }
 
         queue.add(item);

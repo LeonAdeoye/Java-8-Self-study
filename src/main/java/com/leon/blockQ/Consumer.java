@@ -1,8 +1,10 @@
 package com.leon.blockQ;
 
+import java.util.concurrent.TimeUnit;
+
 public class Consumer implements Runnable
 {
-    private BlockQueue queue;
+    private BlockQueue<String> queue;
     public Consumer(BlockQueue<String> queue)
     {
         this.queue = queue;
@@ -19,6 +21,16 @@ public class Consumer implements Runnable
             {
                 System.out.println("Taking from the queue: " + queue.take());
                 Thread.sleep(100);
+            }
+
+            for(int count = 100; count < 120; ++count)
+            {
+                System.out.println("Poll the queue: " );
+                String result = queue.poll(5, TimeUnit.MILLISECONDS);
+                if(result != null)
+                    System.out.println("Polled the queue for: " + result);
+
+                Thread.sleep(10);
             }
         }
         catch(InterruptedException ie)
