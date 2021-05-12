@@ -65,10 +65,18 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
     @Override
     public synchronized void put(T item)
     {
+        boolean outputFlag = true;
         try
         {
             while(queue.size() == maxSize)
+            {
+                if(outputFlag)
+                {
+                    outputFlag = false;
+                    System.out.println("put::wait");
+                }
                 wait();
+            }
         }
         catch(InterruptedException ie)
         {
@@ -88,10 +96,18 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
     @Override
     public synchronized T take()
     {
+        boolean outputFlag = true;
         try
         {
             while(queue.size() == 0)
+            {
+                if(outputFlag)
+                {
+                    outputFlag = false;
+                    System.out.println("take::wait");
+                }
                 wait();
+            }
         }
         catch(InterruptedException ie)
         {
