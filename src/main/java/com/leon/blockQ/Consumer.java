@@ -25,7 +25,6 @@ public class Consumer implements Runnable
 
             for(int count = 100; count < 120; ++count)
             {
-                System.out.println("Poll the queue: " );
                 String result = queue.poll(5, TimeUnit.MILLISECONDS);
                 if(result != null)
                     System.out.println("Polled the queue for: " + result);
