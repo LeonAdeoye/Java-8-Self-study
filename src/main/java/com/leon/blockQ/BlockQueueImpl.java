@@ -16,9 +16,9 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         this.maxSize = maxSize;
     }
 
-    // The Java BlockingQueue add() method will add the element passed as parameter to this method if the BlockingQueue
-    // has space for it internally. If the BlockingQueue does not have space internally for this new element,
-    // the add() method throws an IllegalStateException.
+    // The add method will add the element passed as parameter to this method if the blocking queue
+    // has space for it internally. If the blocking queue does not have space internally for this new element,
+    // the add method throws an IllegalStateException.
     @Override
     public synchronized void add(T item) throws IllegalStateException
     {
@@ -28,8 +28,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         queue.add(item);
     }
 
-    // The BlockingQueue offer() method will add the element passed as parameter to this method if the BlockingQueue has
-    // space for it internally. If the BlockingQueue does not have space internally for this new element, the offer() method return false.
+    // The offer method will add the element passed as parameter to this method if the blocking queue has
+    // space for it internally. If the blocking queue does not have space internally for this new element, the offer method return false.
     @Override
     public synchronized boolean offer(T item)
     {
@@ -40,9 +40,9 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         return true;
     }
 
-    // The BlockingQueue offer() method exists in a version which takes a time out as parameter. This version of the offer() method
-    // will add the element passed as parameter if the BlockingQueue has space for it internally, or space becomes available.
-    // If the BlockingQueue does not have or get space internally for this new element within the time out, this version of the offer() method returns false.
+    // The offer method exists in a version which takes a time out as parameter. This version of the offer method
+    // will add the element passed as parameter if the blocking queue has space for it internally, or space becomes available.
+    // If the blocking queue does not have or get space internally for this new element within the time out, this version of the offer method returns false.
     @Override
     public synchronized boolean offer(T item, long duration, TimeUnit timeUnit)
     {
@@ -59,9 +59,9 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         return true;
     }
 
-    // The BlockingQueue put() method inserts the element into the BlockingQueue if it has space for it internally.
-    // If the BlockingQueue does not have space for the new element, the put() method will block the thread calling
-    // the put() method until the BlockingQueue as space internally for the new element.
+    // The put method inserts the element into the blocking queue if it has space for it internally.
+    // If the blocking queue does not have space for the new element, the put method will block the thread calling
+    // the put method until the blocking queue as space internally for the new element.
     @Override
     public synchronized void put(T item)
     {
@@ -83,8 +83,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         }
     }
 
-    // The Java BlockingQueue take() method will remove the first element in the BlockingQueue. If the BlockingQueue does
-    // not contain any elements, the take() method will block the thread calling take() until an element is inserted into the BlockingQueue.
+    // The take method will remove the first element in the blocking queue. If the blocking queue does
+    // not contain any elements, the take method will block the thread calling take() until an element is inserted into the blocking queue.
     @Override
     public synchronized T take()
     {
@@ -104,8 +104,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         }
     }
 
-    // The BlockingQueue poll() method will remove the first element in the BlockingQueue.
-    // If the BlockingQueue does not contain any elements, the poll() method will return null.
+    // The poll method will remove the first element in the blocking queue.
+    // If the blocking queue does not contain any elements, the poll method will return null.
     @Override
     public synchronized T poll()
     {
@@ -115,8 +115,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
             return queue.remove(0);
     }
 
-    // The BlockingQueue poll(long timeMillis, TimeUnit timeUnit) method will remove the first element in the BlockingQueue.
-    // If the BlockingQueue does not contain any elements, this version of the poll() method will wait for an element to
+    // The poll method will remove the first element in the blocking queue.
+    // If the blocking queue does not contain any elements, this version of the poll method will wait for an element to
     // become available for the given amount of time passed to it as parameter. If no element becomes available within
     // the given time out period, this method returns null.
     @Override
@@ -134,8 +134,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
         return queue.remove(0);
     }
 
-    // The BlockingQueue peek() method will return the first element of the BlockingQueue without removing it.
-    // If the BlockingQueue does not contain any elements, the peek() method will return null.
+    // The peek method will return the first element of the blocking queue without removing it.
+    // If the blocking queue does not contain any elements, the peek method will return null.
     @Override
     public synchronized T peek()
     {
@@ -146,8 +146,8 @@ public class BlockQueueImpl<T> implements BlockQueue<T>
     }
 
 
-    //The BlockingQueue element() method will return the first element of the BlockingQueue without removing it.
-    // If the BlockingQueue does not contain any elements, the element() method will throw a NoSuchElementException
+    // The element method will return the first element of the blocking queue without removing it.
+    // If the blocking queue does not contain any elements, the element method will throw a NoSuchElementException
     @Override
     public synchronized T element() throws NoSuchElementException
     {
