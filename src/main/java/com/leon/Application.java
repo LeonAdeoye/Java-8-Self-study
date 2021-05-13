@@ -5,6 +5,7 @@ import com.leon.bitcoin.ProofOfWork;
 import com.leon.blockQ.BlockingQueueExample;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
+import com.leon.cyclicBarrier.CyclicBarrierExample;
 import com.leon.jackson.JacksonMain;
 import com.leon.latch.ApplicationStarter;
 import com.leon.multithread.MultiThreadMain;
@@ -22,18 +23,20 @@ public class Application
     {
         SpringApplication.run(Application.class, args);
 
-        new BehaviourParamMain().main();
-        new StreamsMain().main();
-        new CollectMain().main();
-        new OptionalMain().main();
-        new CollectionsMain().main();
-        new GofMain().main();
-        new JacksonMain().main();
-        new ReactorMain().main();
-        ProofOfWork.main();
-        MultiThreadMain.main();
-        MapExample.main();
-        ApplicationStarter.verifyServices();
-        BlockingQueueExample.start();
+//        new BehaviourParamMain().main();
+//        new StreamsMain().main();
+//        new CollectMain().main();
+//        new OptionalMain().main();
+//        new CollectionsMain().main();
+//        new GofMain().main();
+//        new JacksonMain().main();
+//        new ReactorMain().main();
+//        ProofOfWork.main();
+//        MultiThreadMain.main();
+//        MapExample.main();
+//        ApplicationStarter.verifyServices();
+//        BlockingQueueExample.start();
+
+        CyclicBarrierExample.run();
     }
 }

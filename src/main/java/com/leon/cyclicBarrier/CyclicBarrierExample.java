@@ -22,6 +22,6 @@ public class CyclicBarrierExample
         CyclicBarrierRunnable barrierRunnable2 = new CyclicBarrierRunnable(barrier1, barrier2);
 
         new Thread(barrierRunnable1).start();
-        new Thread(barrierRunnable2).start()
+        new Thread(barrierRunnable2).start();
     }
 }
