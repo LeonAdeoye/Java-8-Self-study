@@ -10,8 +10,8 @@ public class Shop
     {
         try
         {
+            System.out.println("Calculating the price of " + product);
             Thread.sleep(1000);
-
         }
         catch(InterruptedException ie)
         {
@@ -45,6 +45,6 @@ public class Shop
 
     public static void main() throws Exception
     {
-        System.out.println("Futs price: " + getPriceAsynch("book").get());
+        System.out.println("Price returned by future: " + getPriceAsynch("book").get());
     }
 }

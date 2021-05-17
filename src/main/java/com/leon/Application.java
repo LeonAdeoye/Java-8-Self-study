@@ -13,13 +13,14 @@ import com.leon.optional.OptionalMain;
 import com.leon.reactor.ReactorMain;
 import com.leon.streams.StreamsMain;
 import com.leon.gof.GofMain;
+import futs.Shop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         SpringApplication.run(Application.class, args);
 
@@ -36,7 +37,8 @@ public class Application
 //        MapExample.main();
 //        ApplicationStarter.verifyServices();
 //        BlockingQueueExample.start();
+//        CyclicBarrierExample.run();
 
-        CyclicBarrierExample.run();
+        Shop.main();
     }
 }
