@@ -46,5 +46,8 @@ public class Shop
     public static void main() throws Exception
     {
         System.out.println("Price returned by future: " + getPriceAsynch("book").get());
+
+        // Using completable futures allows you to take advantage of the Java 8 stream, lambda functions compared to simple Futures.
+        System.out.println("Price returned by future simplified: " + CompletableFuture.supplyAsync(() -> getPrice("stamp")).thenApplyAsync((result) -> result * 1000000).get());
     }
 }
