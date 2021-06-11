@@ -84,18 +84,44 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     @Override
     public E take()
     {
-        if(!isEmpty())
+        try
         {
-
+            while(isEmpty())
+            {
+                wait();
+            }
         }
-        return null;
+        catch(InterruptedException ie)
+        {
+            ie.printStackTrace();
+        }
+        finally
+        {
+            notifyAll();
+            return buffer[readPointer++ % capacity];
+        }
     }
 
     @Override
     public void put(E element)
     {
-        if(!isFull())
+        try
         {
+            while(isFull())
+            {
+                wait();
+            }
+        }
+        catch(InterruptedException ie)
+        {
+            ie.printStackTrace();
+        }
+        finally
+        {
+            buffer[++writePointer % capacity] = element;
+            // Notify all after item has been added.
+            if(size() == 1)
+                notifyAll();
         }
     }
 
