@@ -1,5 +1,7 @@
 package com.leon.ring;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 public class RingBufferImpl<E> implements RingBuffer<E>
@@ -30,6 +32,7 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     {
         if(!isFull())
         {
+            buffer[++writePointer % capacity] = element;
             return true;
         }
         return false;
@@ -38,37 +41,68 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     @Override
     public boolean offer(E element, long duration, TimeUnit timeUnit)
     {
-        return false;
+        long timeout = TimeUnit.MILLISECONDS.convert(duration, timeUnit);
+        Instant start = Instant.now();
+
+        while(isFull())
+        {
+            if(Duration.between(start, Instant.now()).toMillis() >= timeout)
+            {
+                return false;
+            }
+        }
+
+        buffer[++writePointer % capacity] = element;
+        return true;
     }
 
     @Override
     public E poll()
     {
+        if(!isEmpty())
+        {
+            return buffer[readPointer++ % capacity];
+        }
         return null;
     }
 
     @Override
     public E poll(long duration, TimeUnit timeUnit)
     {
-        return null;
+        long timeout = TimeUnit.MILLISECONDS.convert(duration, timeUnit);
+        Instant start = Instant.now();
+
+        while(isEmpty())
+        {
+            if(Duration.between(start, Instant.now()).toMillis() >= timeout)
+                return null;
+        }
+
+        return buffer[readPointer++ % capacity];
     }
 
     @Override
     public E take()
     {
+        if(!isEmpty())
+        {
+
+        }
         return null;
     }
 
     @Override
     public void put(E element)
     {
-
+        if(!isFull())
+        {
+        }
     }
 
     @Override
     public E peek()
     {
-        return null;
+        return buffer[readPointer % capacity];
     }
 
     @Override
