@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class RingBufferImpl<E> implements RingBuffer<E>
 {
     private final static int DEFAULT_CAPACITY = 1024;
-    private volatile int writePointer = 0, readPointer = -1;
+    private volatile int writePointer = -1, readPointer = 0;
     private int capacity = 0;
     private E[] buffer;
 

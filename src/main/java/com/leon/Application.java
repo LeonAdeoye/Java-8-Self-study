@@ -11,6 +11,7 @@ import com.leon.latch.ApplicationStarter;
 import com.leon.multithread.MultiThreadMain;
 import com.leon.optional.OptionalMain;
 import com.leon.reactor.ReactorMain;
+import com.leon.ring.RingBufferMain;
 import com.leon.streams.StreamsMain;
 import com.leon.gof.GofMain;
 import futs.Shop;
@@ -38,7 +39,7 @@ public class Application
 //        ApplicationStarter.verifyServices();
 //        BlockingQueueExample.start();
 //        CyclicBarrierExample.run();
-
-        Shop.main();
+//        Shop.main();
+        RingBufferMain.main();
     }
 }
