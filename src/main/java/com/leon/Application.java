@@ -40,6 +40,6 @@ public class Application
 //        BlockingQueueExample.start();
 //        CyclicBarrierExample.run();
 //        Shop.main();
-        RingBufferMain.main();
+        new RingBufferMain().main();
     }
 }
