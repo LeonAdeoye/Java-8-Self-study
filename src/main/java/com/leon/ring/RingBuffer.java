@@ -16,4 +16,9 @@ public interface RingBuffer<E>
 
     E peek();
     int size();
+    int capacity();
+    boolean isFull();
+    boolean isNotFull();
+    boolean isEmpty();
+    boolean isNotEmpty();
 }

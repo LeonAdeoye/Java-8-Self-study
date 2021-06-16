@@ -17,24 +17,45 @@ public class RingBufferImpl<E> implements RingBuffer<E>
         this.buffer = (E[]) new Object[capacity];
     }
 
-    private boolean isFull()
+    @Override
+    public boolean isFull()
     {
         return size() == capacity;
     }
 
-    private boolean isEmpty()
+    @Override
+    public boolean isNotFull()
+    {
+        return !isFull();
+    }
+
+    @Override
+    public boolean isEmpty()
     {
         return writePointer < readPointer;
     }
 
     @Override
+    public boolean isNotEmpty()
+    {
+        return !isEmpty();
+    }
+
+    @Override
+    public int capacity()
+    {
+        return capacity;
+    }
+
+    @Override
     public boolean offer(E element)
     {
-        if(!isFull())
+        if(isNotFull())
         {
             buffer[++writePointer % capacity] = element;
             return true;
         }
+
         return false;
     }
 
@@ -59,10 +80,11 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     @Override
     public E poll()
     {
-        if(!isEmpty())
+        if(isNotEmpty())
         {
             return buffer[readPointer++ % capacity];
         }
+
         return null;
     }
 
@@ -82,7 +104,7 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     }
 
     @Override
-    public E take()
+    public synchronized E take()
     {
         try
         {
@@ -103,7 +125,7 @@ public class RingBufferImpl<E> implements RingBuffer<E>
     }
 
     @Override
-    public void put(E element)
+    public synchronized void put(E element)
     {
         try
         {
@@ -119,7 +141,7 @@ public class RingBufferImpl<E> implements RingBuffer<E>
         finally
         {
             buffer[++writePointer % capacity] = element;
-            // Notify all after item has been added.
+
             if(size() == 1)
                 notifyAll();
         }

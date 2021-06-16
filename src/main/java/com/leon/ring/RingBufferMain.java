@@ -4,7 +4,7 @@ public class RingBufferMain
 {
     public static void main()
     {
-        RingBuffer<String> ringBuffer = new RingBufferImpl<>(20);
+        RingBuffer<String> ringBuffer = new RingBufferImpl<>(2000);
 
         Runnable producer = () ->
         {
@@ -14,6 +14,8 @@ public class RingBufferMain
             }
         };
 
+        new Thread(producer).start();
+
         Runnable consumer = () ->
         {
             for(int i = 0; i < 1000; ++i)
@@ -22,7 +24,6 @@ public class RingBufferMain
             }
         };
 
-        new Thread(producer).start();
         new Thread(consumer).start();
     }
 }
