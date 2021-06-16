@@ -10,7 +10,8 @@ import static java.util.stream.Collectors.toList;
 
 public class RingBufferMain
 {
-    private RingBuffer<String> ringBuffer = new RingBufferImpl<>(200);
+    // TODO need to figure out why 2000 capacity does not work.
+    private RingBuffer<String> ringBuffer = new RingBufferImpl<>(2000);
 
     public int produce()
     {
@@ -60,20 +61,19 @@ public class RingBufferMain
 
     public void main()
     {
-        Instant currentInstant = Instant.now();
         CompletableFuture<Integer> producerFuture = CompletableFuture.supplyAsync(() -> produce());
         CompletableFuture<Integer> consumerFuture = CompletableFuture.supplyAsync(() -> consume());
-
+        Instant currentInstant = Instant.now();
         List<Integer> combined = Stream.of(producerFuture, consumerFuture)
                 .map(CompletableFuture::join)
                 .collect(toList());
 
         System.out.print("\nProduced " + combined.get(0) + " elements and consumed " + combined.get(1) + " elements in " + Duration.between(currentInstant, Instant.now()).toMillis() + "ms.\n");
 
-        currentInstant = Instant.now();
+
         CompletableFuture<Integer> producerFutureWithBlock = CompletableFuture.supplyAsync(() -> produceWithBlock());
         CompletableFuture<Integer> consumerFutureWithBlock = CompletableFuture.supplyAsync(() -> consumeWithBlock());
-
+        currentInstant = Instant.now();
         List<Integer> combinedWithBlock = Stream.of(producerFutureWithBlock, consumerFutureWithBlock)
                 .map(CompletableFuture::join)
                 .collect(toList());
