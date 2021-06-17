@@ -11,9 +11,10 @@ import static java.util.stream.Collectors.toList;
 public class RingBufferMain
 {
     // TODO need to figure out why 2000 capacity does not work.
-    private RingBuffer<String> ringBuffer = new RingBufferImpl<>(2000);
+    private RingBuffer<String> ringBuffer = new RingBufferImpl<>(1000);
+    private CircularBuffer<String> circularBuffer = new CircularBuffer<>(2000);
 
-    public int produce()
+    public int rb_produce()
     {
         int count;
         for(count = 0; count < 10000000;)
@@ -24,12 +25,35 @@ public class RingBufferMain
         return count;
     }
 
-    public int consume()
+    public int rb_consume()
     {
         int count;
         for(count = 0; count < 10000000;)
         {
             String element = ringBuffer.poll();
+            if(element != null)
+                count++;
+        }
+        return count;
+    }
+
+    public int cb_produce()
+    {
+        int count;
+        for(count = 0; count < 10000000;)
+        {
+            if(circularBuffer.add("element " + count))
+                count++;
+        }
+        return count;
+    }
+
+    public int cb_consume()
+    {
+        int count;
+        for(count = 0; count < 10000000;)
+        {
+            String element = circularBuffer.get();
             if(element != null)
                 count++;
         }
@@ -61,10 +85,20 @@ public class RingBufferMain
 
     public void main()
     {
-        CompletableFuture<Integer> producerFuture = CompletableFuture.supplyAsync(() -> produce());
-        CompletableFuture<Integer> consumerFuture = CompletableFuture.supplyAsync(() -> consume());
+        CompletableFuture<Integer> cb_producerFuture = CompletableFuture.supplyAsync(() -> cb_produce());
+        CompletableFuture<Integer> cb_consumerFuture = CompletableFuture.supplyAsync(() -> cb_consume());
         Instant currentInstant = Instant.now();
-        List<Integer> combined = Stream.of(producerFuture, consumerFuture)
+        List<Integer> ccombined = Stream.of(cb_producerFuture, cb_consumerFuture)
+                .map(CompletableFuture::join)
+                .collect(toList());
+
+        System.out.print("\nProduced " + ccombined.get(0) + " elements and consumed " + ccombined.get(1) + " elements in " + Duration.between(currentInstant, Instant.now()).toMillis() + "ms.\n");
+
+
+        CompletableFuture<Integer> rb_producerFuture = CompletableFuture.supplyAsync(() -> rb_produce());
+        CompletableFuture<Integer> rb_consumerFuture = CompletableFuture.supplyAsync(() -> rb_consume());
+        currentInstant = Instant.now();
+        List<Integer> combined = Stream.of(rb_producerFuture, rb_consumerFuture)
                 .map(CompletableFuture::join)
                 .collect(toList());
 
