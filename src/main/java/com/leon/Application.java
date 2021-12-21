@@ -3,6 +3,7 @@ package com.leon;
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.bitcoin.ProofOfWork;
 import com.leon.blockQ.BlockingQueueExample;
+import com.leon.chronicleMap.ChronicleMapper;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
 import com.leon.cyclicBarrier.CyclicBarrierExample;
@@ -23,8 +24,9 @@ public class Application
 {
     public static void main(String[] args) throws Exception
     {
-        SpringApplication.run(Application.class, args);
 
+
+        SpringApplication.run(Application.class, args);
 //        new BehaviourParamMain().main();
 //        new StreamsMain().main();
 //        new CollectMain().main();
@@ -40,6 +42,7 @@ public class Application
 //        BlockingQueueExample.start();
 //        CyclicBarrierExample.run();
 //        Shop.main();
-        new RingBufferMain().main();
+//        new RingBufferMain().main();
+        new ChronicleMapper().main();
     }
 }
