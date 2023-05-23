@@ -1,5 +1,7 @@
 package com.leon;
 
+import com.leon.algos.BinarySearch;
+import com.leon.algos.BubbleSort;
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.bitcoin.ProofOfWork;
 import com.leon.blockQ.BlockingQueueExample;
@@ -43,6 +45,9 @@ public class Application
 //        CyclicBarrierExample.run();
 //        Shop.main();
 //        new RingBufferMain().main();
-        new ChronicleMapper().main();
+//        new ChronicleMapper().main();
+//        BinarySearch.main();
+        BubbleSort.main();
+
     }
 }
