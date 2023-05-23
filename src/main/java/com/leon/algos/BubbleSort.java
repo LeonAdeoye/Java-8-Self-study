@@ -26,6 +26,24 @@ public class BubbleSort
 		}
 	}
 
+	public static void sortIterativelyFast(int[] array)
+	{
+		int length = array.length;
+		for(int i = 0; i < length - 1; i++)
+		{
+			for(int j = 0; j < length - i - 1; j++)
+			{
+				if(array[j] > array[j+1])
+				{
+					int temp = array[j+1];
+					array[j+1] = array[j];
+					array[j] = temp;
+
+				}
+			}
+		}
+	}
+
 	public static void sortRecursively(int[] array, int length)
 	{
 		boolean sorted = true;
@@ -46,8 +64,13 @@ public class BubbleSort
 
 	public static void main()
 	{
+		int[] unsortedArrayZERO = new int[] {2,0,1,0,5,3};
+		sortIteratively(unsortedArrayZERO);
+		Arrays.stream(unsortedArrayZERO).forEach(System.out::print);
+		System.out.println("");
+
 		int[] unsortedArrayONE = new int[] {2,0,1,0,5,3};
-		sortIteratively(unsortedArrayONE);
+		sortIterativelyFast(unsortedArrayONE);
 		Arrays.stream(unsortedArrayONE).forEach(System.out::print);
 		System.out.println("");
 
