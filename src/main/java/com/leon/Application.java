@@ -2,6 +2,7 @@ package com.leon;
 
 import com.leon.algos.BinarySearch;
 import com.leon.algos.BubbleSort;
+import com.leon.algos.MergeSort;
 import com.leon.behaviourparam.BehaviourParamMain;
 import com.leon.bitcoin.ProofOfWork;
 import com.leon.blockQ.BlockingQueueExample;
@@ -47,7 +48,8 @@ public class Application
 //        new RingBufferMain().main();
 //        new ChronicleMapper().main();
 //        BinarySearch.main();
-        BubbleSort.main();
+//        BubbleSort.main();
+        MergeSort.main();
 
     }
 }
