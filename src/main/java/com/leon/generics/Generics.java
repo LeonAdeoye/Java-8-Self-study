@@ -31,9 +31,11 @@ public class Generics
 	{
 		List<Integer> integers = Arrays.asList(1, 2, 3);
 		List<Double> doubles = Arrays.asList(1.5, 2.5, 3.5);
-		// Below won't compile because collections are invariant. You need to make them covariant by using an upper bounded wildcard.
-		// double sum = sum(integers);
-		// double sum = sum(doubles);
+		/*
+		Below won't compile because collections are invariant. You need to make them covariant by using an upper bounded wildcard.
+		double sum = sum(integers);
+		double sum = sum(doubles);
+		*/
 		double sum = sumWithCovariance(integers);
 	}
 
@@ -54,7 +56,7 @@ public class Generics
 		List<Number> numbers = new ArrayList<>();
 		numbers.add(3.14);
 		numbers.add(42);
-		// Below won't work because
+		// Below won't work because contravariance.
 		// append(numbers);
 		appendWithContravariance(numbers);
 	}
