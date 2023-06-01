@@ -1,6 +1,6 @@
 package com.leon.collections;
 
-public interface LinkedList<T>
+public interface LinkedListInterface<T>
 {
 	void add(T element);
 	void remove(T element);

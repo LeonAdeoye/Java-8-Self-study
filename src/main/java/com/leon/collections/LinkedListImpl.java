@@ -1,6 +1,6 @@
 package com.leon.collections;
 
-public class LinkedListImpl<T> implements LinkedList<T>
+public class LinkedListImpl<T> implements LinkedListInterface<T>
 {
 	private Node<T> root;
 	private int size;
@@ -56,7 +56,7 @@ public class LinkedListImpl<T> implements LinkedList<T>
 
 	public static void main()
 	{
-		LinkedList<String> list = new LinkedListImpl<>();
+		LinkedListInterface<String> list = new LinkedListImpl<>();
 		list.add("Saori");
 		list.add("Harper");
 		list.add("Horatio");

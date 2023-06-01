@@ -1,25 +1,6 @@
 package com.leon;
 
-import com.leon.algos.BinarySearch;
-import com.leon.algos.BubbleSort;
-import com.leon.algos.MergeSort;
-import com.leon.behaviourparam.BehaviourParamMain;
-import com.leon.bitcoin.ProofOfWork;
-import com.leon.blockQ.BlockingQueueExample;
-import com.leon.chronicleMap.ChronicleMapper;
-import com.leon.collect.CollectMain;
-import com.leon.collections.CollectionsMain;
 import com.leon.collections.LinkedListImpl;
-import com.leon.cyclicBarrier.CyclicBarrierExample;
-import com.leon.jackson.JacksonMain;
-import com.leon.latch.ApplicationStarter;
-import com.leon.multithread.MultiThreadMain;
-import com.leon.optional.OptionalMain;
-import com.leon.reactor.ReactorMain;
-import com.leon.ring.RingBufferMain;
-import com.leon.streams.StreamsMain;
-import com.leon.gof.GofMain;
-import futs.Shop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -28,8 +9,6 @@ public class Application
 {
     public static void main(String[] args) throws Exception
     {
-
-
         SpringApplication.run(Application.class, args);
 //        new BehaviourParamMain().main();
 //        new StreamsMain().main();
@@ -52,6 +31,5 @@ public class Application
 //        BubbleSort.main();
 //        MergeSort.main();
         LinkedListImpl.main();
-
     }
 }
