@@ -9,6 +9,7 @@ import com.leon.blockQ.BlockingQueueExample;
 import com.leon.chronicleMap.ChronicleMapper;
 import com.leon.collect.CollectMain;
 import com.leon.collections.CollectionsMain;
+import com.leon.collections.LinkedListImpl;
 import com.leon.cyclicBarrier.CyclicBarrierExample;
 import com.leon.jackson.JacksonMain;
 import com.leon.latch.ApplicationStarter;
@@ -49,7 +50,8 @@ public class Application
 //        new ChronicleMapper().main();
 //        BinarySearch.main();
 //        BubbleSort.main();
-        MergeSort.main();
+//        MergeSort.main();
+        LinkedListImpl.main();
 
     }
 }
