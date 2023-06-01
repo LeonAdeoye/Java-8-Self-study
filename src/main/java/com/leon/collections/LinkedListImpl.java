@@ -2,6 +2,33 @@ package com.leon.collections;
 
 public class LinkedListImpl<T> implements LinkedListInterface<T>
 {
+	private class Node<T>
+	{
+		private final T data;
+		private Node<T> next;
+
+		private Node(T data)
+		{
+			this.data = data;
+			this.next = null;
+		}
+
+		private T getData()
+		{
+			return this.data;
+		}
+
+		private Node<T> getNext()
+		{
+			return this.next;
+		}
+
+		private void setNext(Node<T> next)
+		{
+			this.next = next;
+		}
+	}
+
 	private Node<T> root;
 	private int size;
 
