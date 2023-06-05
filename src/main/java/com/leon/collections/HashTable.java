@@ -19,13 +19,6 @@ public class HashTable<K,V>
 			this.next = null;
 		}
 
-		public HashItem()
-		{
-			this.key = null;
-			this.value = null;
-			this.next = null;
-		}
-
 		public K getKey()
 		{
 			return key;
@@ -34,11 +27,6 @@ public class HashTable<K,V>
 		public V getValue()
 		{
 			return value;
-		}
-
-		public boolean hasNext()
-		{
-			return next != null;
 		}
 
 		@Override
@@ -164,7 +152,9 @@ public class HashTable<K,V>
 
 	public void clear()
 	{
-		table.clear();
+		for(int index = 0; index < capacity; ++index)
+			table.set(index, null);
+
 		size = 0;
 	}
 
@@ -218,12 +208,13 @@ public class HashTable<K,V>
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		for(HashItem<K,V> item : table)
+		for(int index = 0; index < capacity; ++index)
 		{
-			sb.append("Bucket: ").append(table.indexOf(item)).append("\n");
+			HashItem<K,V> item = table.get(index);
+			sb.append("Bucket: ").append(index).append("\n");
 			while(item != null)
 			{
-				sb.append(item.toString()).append("\n");
+				sb.append(item).append("\n");
 				item = item.next;
 			}
 		}
@@ -245,6 +236,16 @@ public class HashTable<K,V>
 		hashTable.put("9", "9");
 		hashTable.put("10", "10");
 
+		System.out.println("1: " + hashTable.get("1"));
+		System.out.println("2: " + hashTable.get("2"));
+		System.out.println("3: " + hashTable.get("3"));
+		System.out.println("5: " + hashTable.get("5"));
+		System.out.println("6: " + hashTable.get("6"));
+		System.out.println("7: " + hashTable.get("7"));
+		System.out.println("8: " + hashTable.get("8"));
+		System.out.println("9: " + hashTable.get("9"));
+		System.out.println("10: " + hashTable.get("10"));
+
 		System.out.println(hashTable);
 		hashTable.remove("1");
 		System.out.println(hashTable);
@@ -258,6 +259,9 @@ public class HashTable<K,V>
 
 		hashTable.values().forEach(System.out::println);
 		hashTable.keySet().forEach(System.out::println);
+
+		hashTable.clear();
+		System.out.println(hashTable);
 
 	}
 }
