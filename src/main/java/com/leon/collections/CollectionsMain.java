@@ -6,6 +6,7 @@ public class CollectionsMain
 {
     public static void main()
     {
+
         List<String> staff = new LinkedList<>();
         staff.add("Saori");
         staff.add("Harper");

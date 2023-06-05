@@ -1,5 +1,6 @@
 package com.leon;
 
+import com.leon.collections.HashTable;
 import com.leon.collections.LinkedListImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +31,7 @@ public class Application
 //        BinarySearch.main();
 //        BubbleSort.main();
 //        MergeSort.main();
-        LinkedListImpl.main();
+//        LinkedListImpl.main();
+        HashTable.main();
     }
 }
