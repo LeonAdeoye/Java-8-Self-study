@@ -123,24 +123,23 @@ public class HashTable<K,V>
 	public void remove(K key)
 	{
 		int index = hash(key);
-		HashItem<K,V> item = table.get(index);
-		HashItem<K,V> root = table.get(index);
-		HashItem<K,V> previous = null;
+		HashItem<K,V> node = table.get(index);
+		HashItem<K,V> root = node, previous = node;
 
-		while(item != null)
+		while(node != null)
 		{
-			if(item.getKey().equals(key))
+			if(node.getKey().equals(key))
 			{
-				if(item == root)
-					root = item.next;
+				if(node == root)
+					table.set(index, node.next);
 				else
-					previous.next=item.next;
+					previous.next = node.next;
 
 				--size;
 				break;
 			}
-			previous = item;
-			item = item.next;
+			previous = node;
+			node = node.next;
 		}
 	}
 
@@ -234,24 +233,31 @@ public class HashTable<K,V>
 	public static void main()
 	{
 		HashTable<String, String> hashTable = new HashTable<>(3, 0.75);
-		hashTable.put("1", "Leon");
-		hashTable.put("2", "saori");
-		hashTable.put("2", "Mike");
-		hashTable.put("3", "Harper");
-		hashTable.put("3", "Horatio");
-		hashTable.put("5", "Isaac");
+		hashTable.put("1", "1");
+		hashTable.put("2", "2");
+		hashTable.put("2", "2");
+		hashTable.put("3", "3");
+		hashTable.put("3", "3");
+		hashTable.put("5", "5");
+		hashTable.put("6", "6");
+		hashTable.put("7", "7");
+		hashTable.put("8", "8");
+		hashTable.put("9", "9");
+		hashTable.put("10", "10");
 
-		hashTable.remove("5");
+		System.out.println(hashTable);
+		hashTable.remove("1");
 		System.out.println(hashTable);
 
 		System.out.println("hashTable.containsKey(1): " + hashTable.containsKey("1"));
 		System.out.println("hashTable.containsKey(5): " + hashTable.containsKey("5"));
 
-		System.out.println("hashTable.containsValue(Harper): " + hashTable.containsValue("Harper"));
-		System.out.println("hashTable.containsValue(Isaac): " + hashTable.containsValue("Isaac"));
-		System.out.println("hashTable.containsValue(Leon): " + hashTable.containsValue("Leon"));
+		System.out.println("hashTable.containsValue(1): " + hashTable.containsValue("1"));
+		System.out.println("hashTable.containsValue(2): " + hashTable.containsValue("2"));
+		System.out.println("hashTable.containsValue(3): " + hashTable.containsValue("3"));
 
 		hashTable.values().forEach(System.out::println);
 		hashTable.keySet().forEach(System.out::println);
+
 	}
 }
