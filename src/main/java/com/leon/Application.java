@@ -1,5 +1,7 @@
 package com.leon;
 
+import com.leon.amps.Publisher;
+import com.leon.amps.Subscriber;
 import com.leon.collections.HashTable;
 import com.leon.collections.LinkedListImpl;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +34,7 @@ public class Application
 //        BubbleSort.main();
 //        MergeSort.main();
 //        LinkedListImpl.main();
-        HashTable.main();
+//        HashTable.main();
+        Subscriber.main();
     }
 }
