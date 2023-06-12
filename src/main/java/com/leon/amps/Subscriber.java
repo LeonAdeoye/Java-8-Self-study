@@ -9,10 +9,10 @@ public class Subscriber
 {
 	public static void main()
 	{
-		Client amps = new Client("test-amps-app");
+		Client amps = new Client("subscriber");
 		try
 		{
-			amps.connect("tcp://localhost:9007/amps/json");
+			amps.connect("tcp://128.0.0.1:9007/amps/json");
 			amps.logon();
 			for(Message message : amps.subscribe("orders", "/symbol LIKE 'ABCD'"))
 			{

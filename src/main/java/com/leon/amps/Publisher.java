@@ -8,7 +8,7 @@ public class Publisher
 {
 	public static void main()
 	{
-		Client amps = new Client("test-amps-app");
+		Client amps = new Client("publisher");
 		try
 		{
 			amps.connect("tcp://localhost:9007/amps/json");
