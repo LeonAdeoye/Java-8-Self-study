@@ -1,14 +1,11 @@
 package com.leon.amps;
 
-import com.crankuptheamps.client.Client;
-import com.crankuptheamps.client.Command;
-import com.crankuptheamps.client.CommandId;
+import com.crankuptheamps.client.*;
 import com.crankuptheamps.client.exception.AMPSException;
 import com.crankuptheamps.client.exception.ConnectionException;
 import com.crankuptheamps.client.exception.DisconnectedException;
-import static java.lang.Thread.sleep;
 
-public class Subscriber
+public class SOWSubscriber
 {
 	public static void main() throws DisconnectedException
 	{
@@ -18,9 +15,27 @@ public class Subscriber
 		{
 			amps.connect("tcp://localhost:9007/amps/json?ip_protocol_prefer=ipv6");
 			amps.logon();
-			Command subscribe = new Command("subscribe").setTopic("orders").setFilter("/id = 1");
-			commandId = amps.executeAsync(subscribe, (message) -> System.out.println(message.getData()));
-			sleep(10000);
+
+			MessageStream ms = amps.execute(new Command(Message.Command.SOW)
+					.setTopic("orders-sow"));
+
+			for (Message m : ms)
+			{
+				if (m.getCommand() == Message.Command.GroupBegin)
+				{
+					System.out.println("Receiving messages from SOW " +
+							"(beginning of group).");
+					continue;
+				}
+				if (m.getCommand() == Message.Command.GroupEnd)
+				{
+					System.out.println("Finished receiving messages from"
+							+" SOW (end of group).");
+					continue;
+				}
+				System.out.println(m.getData());
+			}
+
 		}
 		catch (ConnectionException e)
 		{
@@ -30,13 +45,8 @@ public class Subscriber
 		{
 			e.printStackTrace();
 		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
 		finally
 		{
-			amps.unsubscribe(commandId);
 			amps.close();
 		}
 	}

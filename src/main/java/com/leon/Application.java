@@ -1,6 +1,9 @@
 package com.leon;
 
 import com.leon.amps.Publisher;
+import com.leon.amps.SOWSubscriber;
+import com.leon.amps.Subscriber;
+import com.leon.mongo.MongoSaver;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +19,6 @@ public class Application implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception
     {
-        Publisher.main();
+        SOWSubscriber.main();
     }
 }

@@ -11,7 +11,7 @@ public class Publisher
 		Client amps = new Client("publisher");
 		try
 		{
-			amps.connect("tcp://localhost:9007/amps/json");
+			amps.connect("tcp://localhost:9007/amps/json?ip_protocol_prefer=ipv6");
 			amps.logon();
 			amps.publish("orders", "{\"symbol\":\"ABCD\",\"price\":100.0,\"quantity\":1000}");
 		}
