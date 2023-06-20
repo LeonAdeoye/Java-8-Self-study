@@ -1,6 +1,7 @@
 package com.leon;
 
 import com.leon.amps.Publisher;
+import com.leon.amps.SOWAndSubscriber;
 import com.leon.amps.SOWSubscriber;
 import com.leon.amps.Subscriber;
 import com.leon.mongo.MongoSaver;
@@ -19,6 +20,6 @@ public class Application implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception
     {
-        SOWSubscriber.main();
+        SOWAndSubscriber.main();
     }
 }
