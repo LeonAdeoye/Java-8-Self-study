@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>WS</title>
+    <script>
+			var ws;
+			startChat = () =>
+			{
+				alert("starting");
+				ws = new WebSocket('ws://127.0.0.1:11111/ws');
+				alert(ws);
+				ws.onmessage = (data) =>
+				{
+					alert(data.data);
+				}
+				alert("started");
+			}
+			endChat = () =>
+			{
+				alert("ending");
+				if (ws != null)
+				{
+					ws.close();
+				}
+				alert("ended");
+			}
+			sendChat = () =>
+			{
+				alert("sending");
+				if (ws != null)
+				{
+					var data = JSON.stringify({'user': 'Leon'})
+					ws.send(data);
+				}
+				alert("Sent");
+			}
+    </script>
+</head>
+<body>
+    <button onclick="startChat()">Start Chat</button>
+    <button onclick="sendChat()">Send Chat</button>
+    <button onclick="endChat()">End Chat</button>
+</body>
+</html>
