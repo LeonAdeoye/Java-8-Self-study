@@ -28,16 +28,4 @@ public class SocketTextHandler extends TextWebSocketHandler
 	{
 		System.out.println("Connection closed");
 	}
-
-	@Override
-	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception
-	{
-		System.out.println("Transport error");
-	}
-
-	@Override
-	public boolean supportsPartialMessages()
-	{
-		return false;
-	}
 }
