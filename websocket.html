@@ -5,33 +5,21 @@
 			var ws;
 			startChat = () =>
 			{
-				alert("starting");
-				ws = new WebSocket('ws://127.0.0.1:11111/ws');
-				alert(ws);
-				ws.onmessage = (data) =>
-				{
-					alert(data.data);
-				}
-				alert("started");
+				ws = new WebSocket('ws://127.0.0.1:8080/stomp');
+				ws.onmessage = (data) => alert(data.data);
 			}
 			endChat = () =>
 			{
-				alert("ending");
 				if (ws != null)
-				{
 					ws.close();
-				}
-				alert("ended");
 			}
 			sendChat = () =>
 			{
-				alert("sending");
 				if (ws != null)
 				{
 					var data = JSON.stringify({'user': 'Leon'})
 					ws.send(data);
 				}
-				alert("Sent");
 			}
     </script>
 </head>
